@@ -1,0 +1,77 @@
+# bilayer.inp
+# Lipid double layer with water over and below
+#
+#############################################
+
+# This is just an additional notes for bilayer input file (bilayer.inp) in Packmol.
+# You can go to https://github.com/slitvinov/packmol/blob/master/examples/bilayer-comment.inp for
+# more detailed explanation. Have fun!
+
+
+tolerance 2.0 
+filetype pdb
+output bilayer.pdb
+
+#############################################
+
+WATER LAYER 1 ###############################
+
+structure water.pdb 
+  number 500
+#40. 40. = X and Y value for box
+# 0 => thickness of box (10)
+  inside box 0. 0. -10. 40. 40. 0.
+end structure
+
+WATER LAYER 2 ###############################
+
+structure water.pdb
+  number 500
+# 28 => Zmax LIPID LAYER 2
+# 38 => Z = thickness of water box. In this case (10)
+  inside box 0. 0. 28. 40. 40. 38.
+end structure
+
+LIPID LAYER 1 ###############################
+
+structure palmitoil.pdb 
+  number 50
+#14 => little bit longer than the length of lipid
+#40. 40. X and Y value of box
+# 0 => Zmax for WATER LAYER 1
+  inside box 0. 0. 0. 40. 40. 14.
+# polar head
+  atoms 31 32
+# 2 => Zmin inside box + 2
+    below plane 0. 0. 1. 2.
+  end atoms
+#hydrophobic tail
+  atoms 1 2
+#12 => Zmax inside box -2 (same with Zmin inside box + length of lipid layer)
+    over plane 0. 0. 1. 12.
+  end atoms
+end structure 
+
+LIPID LAYER 2 ###############################
+
+structure palmitoil.pdb 
+  number 50
+# 14 => Zmax LIPID LAYER 1 
+# 28 => Zmin + length of lipid (Zmin + 14(same as the thickness in LIPID LAYER 1)
+  inside box 0. 0. 14. 40. 40. 28.
+#hydrophobic tail
+  atoms 1 2
+# 2 => Zmin inside box + 2
+    below plane 0. 0. 1. 16.
+  end atoms
+#polar head
+  atoms 31 32
+#12 => Zmax inside box -2 (same with Zmin inside box + length of lipid layer)
+    over plane 0. 0. 1. 26 
+  end atoms
+end structure 
+
+
+#############################################
+
+# Have fun! \(^,^)/
