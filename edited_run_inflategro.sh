@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script is edited to smoothen the iteration.
+# I just added echo in line 59 so that it won't inquire user input in every iteration.
+
 # This script assumes you have already inflated the system with the InflateGRO command
 # provided in the tutorial, and that you have further updated topol.top correctly to
 # reflect the number of DPPC lipids that were deleted.
